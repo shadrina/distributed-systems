@@ -28,6 +28,8 @@ dependencies {
     jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.7-b41'
     jaxb 'com.sun.xml.bind:jaxb-impl:2.2.7-b41'
     jaxb 'javax.xml.bind:jaxb-api:2.2.7'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

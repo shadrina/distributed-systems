@@ -5,5 +5,5 @@
 // Generated on: 2020.06.10 at 01:12:15 AM NOVT 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://openstreetmap.org/osm/0.6", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package ru.nsu.distributed.schema;
