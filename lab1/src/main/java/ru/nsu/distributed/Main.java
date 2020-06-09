@@ -9,9 +9,17 @@ import org.slf4j.LoggerFactory;
 public class Main {
     private static Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
-    public static void parseArchive(String archivePath) {
+    private static void printStatistics(BzippedXmlReader bzippedXmlReader) {
+        bzippedXmlReader.getModifications().entrySet().stream()
+                .sorted((e1, e2) -> e2.getValue() - e1.getValue())
+                .forEachOrdered(e -> System.out.println(e.getKey() + " " + e.getValue()));
+        System.out.println("Unique keys count: " + bzippedXmlReader.getKeys().size());
+    }
+
+    private static void parseArchive(String archivePath) {
         try (var bzippedXmlReader = new BzippedXmlReader(archivePath)) {
             bzippedXmlReader.read();
+            printStatistics(bzippedXmlReader);
         } catch (Exception e) {
             e.printStackTrace();
         }
