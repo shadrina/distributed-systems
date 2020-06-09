@@ -72,6 +72,6 @@ public class JaxbXmlReader extends BzippedXmlReader {
         runnable.run();
         var diff = System.currentTimeMillis() - start;
         var result = recordAmount * 1. / (diff / 1000.);
-        System.out.println((int) result);
+        System.out.println((int) result + " records/second");
     }
 }
