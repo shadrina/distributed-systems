@@ -24,6 +24,7 @@ public class Main {
         var options = new Options();
         options
                 .addOption("f", "file", true, "Archive file absolute path")
+                .addOption("l", "limit", true, "Records limit")
                 .addOption("j", "jaxb", false, "JAXB mode");
         var parser = new DefaultParser();
         var cmd = parser.parse(options, args);
@@ -35,6 +36,9 @@ public class Main {
         var path = cmd.getOptionValue("f");
         var jaxbMode = cmd.hasOption("j");
         try (var reader = jaxbMode ? new JaxbXmlReader(path) : new SimpleXmlReader(path)) {
+            if (cmd.hasOption("l")) {
+                reader.setRecordLimit(Integer.parseInt(cmd.getOptionValue("l")));
+            }
             runReader(reader);
         } catch (XMLStreamException | IOException e) {
             e.printStackTrace();

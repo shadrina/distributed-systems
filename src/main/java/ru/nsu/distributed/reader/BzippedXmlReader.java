@@ -12,14 +12,24 @@ import java.io.IOException;
 public abstract class BzippedXmlReader implements AutoCloseable {
     private static final XMLInputFactory FACTORY = XMLInputFactory.newInstance();
     protected final XMLStreamReader reader;
+    private int recordLimit = -1;
 
     public BzippedXmlReader(String archivePath) throws XMLStreamException, IOException {
         var compressorInputStream = new BZip2CompressorInputStream(new FileInputStream(archivePath));
         reader = FACTORY.createXMLStreamReader(compressorInputStream);
     }
 
+    public void setRecordLimit(int recordLimit) {
+        this.recordLimit = recordLimit;
+    }
+
     public void read() throws XMLStreamException {
+        var isThereRecordLimit = recordLimit != -1;
+        var recordRead = 0;
         while (reader.hasNext()) {
+            if (isThereRecordLimit && recordRead >= recordLimit) {
+                return;
+            }
             var event = reader.next();
             if (event != XMLEvent.START_ELEMENT) {
                 continue;
@@ -29,6 +39,7 @@ public abstract class BzippedXmlReader implements AutoCloseable {
             } else if (reader.getLocalName().equals("tag")) {
                 processTagElement();
             }
+            recordRead++;
         }
     }
 
